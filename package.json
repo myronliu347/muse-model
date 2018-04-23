@@ -1,0 +1,37 @@
+{
+  "name": "muse-model",
+  "version": "0.1.0",
+  "description": "a vuex plugin",
+  "main": "dist/muse-model.js",
+  "scripts": {
+    "dev": "parcel demo/index.html",
+    "build": "rm -rf dist && rollup --config rollup.config.js"
+  },
+  "author": "myron.liu <myronliu347@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-vue": "^4.5.0",
+    "jest": "^22.4.3",
+    "jest-cli": "^22.4.3",
+    "parcel-bundler": "^1.7.1",
+    "parcel-plugin-vue": "^1.5.0",
+    "rollup": "^0.58.1",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "dependencies": {
+    "vuex": "^3.0.1"
+  }
+}
