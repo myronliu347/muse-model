@@ -1,6 +1,6 @@
 {
   "name": "muse-model",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a vuex plugin",
   "main": "dist/muse-model.js",
   "scripts": {
@@ -29,9 +29,7 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",
     "vue": "^2.5.16",
+    "vuex": "^3.0.1",
     "vue-template-compiler": "^2.5.16"
-  },
-  "dependencies": {
-    "vuex": "^3.0.1"
   }
 }
