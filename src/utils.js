@@ -1,6 +1,6 @@
 export function warn (msg, err) {
   if (typeof console !== 'undefined') {
-    console.warn('[vue-muse-model] ' + msg);
+    console.warn('[muse-model] ' + msg);
     if (err) {
       console.warn(err.stack);
     }
@@ -15,6 +15,10 @@ export function isPlainObject (obj) {
 
 export function isPromise (val) {
   return val && typeof val.then === 'function';
+}
+
+export function assert (condition, msg) {
+  if (!condition) throw new Error(`[muse-model] ${msg}`);
 }
 
 export function generateModule (model) {

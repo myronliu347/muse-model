@@ -2,10 +2,24 @@ import { mapState, mapActions } from 'vuex';
 import { generateModule, allIn, warn } from './utils';
 
 export default class Muse {
-  constructor (store) {
-    this.store = store;
+  constructor (store, options) {
+    this.$store = store;
+    this.$options = options;
     this.state = {};
     this.actions = {};
+    this._init();
+  }
+
+  _init () {
+    if (this.$options.models) {
+      this.$options.models.forEach((model) => {
+        this.registerModel(model);
+      });
+    }
+
+    if (this.$options.plugins) {
+      // TODO 加载插件
+    }
   }
 
   registerModel (model) {
@@ -16,7 +30,7 @@ export default class Muse {
     }
     if (this.isRegistedModel(namespace)) return;
     const module = generateModule(model);
-    this.store.registerModule(namespace, module);
+    this.$store.registerModule(namespace, module);
 
     let state = {};
     Object.keys(module.state).forEach(key => (state[key] = state => state[namespace][key]));
