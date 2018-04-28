@@ -7,6 +7,7 @@ export default class Muse {
     this.$options = options;
     this.state = {};
     this.actions = {};
+    this.plugins = [];
     this._init();
   }
 
@@ -15,10 +16,6 @@ export default class Muse {
       this.$options.models.forEach((model) => {
         this.registerModel(model);
       });
-    }
-
-    if (this.$options.plugins) {
-      // TODO 加载插件
     }
   }
 
@@ -69,5 +66,13 @@ export default class Muse {
       ...component.methods
     };
     return component;
+  }
+
+  dispatch (type, ...args) {
+    this.$store.dispatch(type, args);
+  }
+
+  watch (fn, callback, options) {
+    this.$store.watch(fn, callback, options);
   }
 };
