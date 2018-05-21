@@ -25,7 +25,8 @@ export function generateModule (model, $store) {
   const namespace = model.namespace;
   const module = {
     namespaced: true,
-    state: model.state,
+    state: model.state || {},
+    getters: model.getters || {},
     actions: {},
     mutations: {}
   };

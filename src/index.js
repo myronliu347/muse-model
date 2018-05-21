@@ -1,4 +1,4 @@
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import { generateModule, allIn, warn } from './utils';
 
 export default class Muse {
@@ -6,6 +6,7 @@ export default class Muse {
     this.$store = store;
     this.$options = options || {};
     this.state = {};
+    this.getters = {};
     this.actions = {};
     this._init();
   }
@@ -31,6 +32,9 @@ export default class Muse {
     let state = {};
     Object.keys(module.state).forEach(key => (state[key] = state => state[namespace][key]));
     state = mapState(state);
+    let getters = {};
+    Object.keys(module.getters).forEach(key => (getters[key] = `${namespace}/${key}`));
+    getters = mapGetters(getters);
 
     const actions = {};
     Object.keys(model).forEach((key) => {
@@ -41,6 +45,7 @@ export default class Muse {
     });
 
     this.state[namespace] = state;
+    this.getters[namespace] = getters;
     this.actions[namespace] = actions;
   }
 
@@ -53,7 +58,7 @@ export default class Muse {
 
     models.forEach(model => this.registerModel(model));
 
-    const mergeProp = (filter || allIn)(this.state, this.actions);
+    const mergeProp = (filter || allIn)(this.state, this.actions, this.getters);
     component.computed = {
       ...mergeProp.computed,
       ...component.computed

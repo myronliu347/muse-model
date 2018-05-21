@@ -3,7 +3,11 @@ export default {
   state: {
     count: 1
   },
-
+  getters: {
+    computedCount (state) {
+      return state.count + 2;
+    }
+  },
   add () {
     return {
       count: this.state.count + 1
