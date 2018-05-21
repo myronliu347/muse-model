@@ -1,4 +1,4 @@
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import { generateModule, allIn, warn } from './utils';
 
 export default class Muse {
