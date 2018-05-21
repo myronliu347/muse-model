@@ -4,7 +4,7 @@ import { generateModule, allIn, warn } from './utils';
 export default class Muse {
   constructor (store, options) {
     this.$store = store;
-    this.$options = options;
+    this.$options = options || {};
     this.state = {};
     this.actions = {};
     this.plugins = [];
@@ -26,7 +26,7 @@ export default class Muse {
       return;
     }
     if (this.isRegistedModel(namespace)) return;
-    const module = generateModule(model);
+    const module = generateModule(model, this.$store);
     this.$store.registerModule(namespace, module);
 
     let state = {};
@@ -34,12 +34,10 @@ export default class Muse {
     state = mapState(state);
 
     const actions = {};
-    Object.keys(module.actions).forEach((key) => {
-      const action = mapActions({
-        [key]: `${namespace}/${key}`
-      })[key];
+    Object.keys(model).forEach((key) => {
+      if (typeof model[key] !== 'function') return;
       actions[key] = function (...args) {
-        return action.call(this, args);
+        return model[key].apply(model, args);
       };
     });
 

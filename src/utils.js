@@ -21,7 +21,7 @@ export function assert (condition, msg) {
   if (!condition) throw new Error(`[muse-model] ${msg}`);
 }
 
-export function generateModule (model) {
+export function generateModule (model, $store) {
   const namespace = model.namespace;
   const module = {
     namespaced: true,
@@ -32,27 +32,27 @@ export function generateModule (model) {
 
   Object.keys(model).forEach((actionKey) => {
     if (typeof model[actionKey] !== 'function') return;
-    const mutationType = `${namespace}_${actionKey}`;
-    module.actions[actionKey] = function ({ commit }, args) {
-      const result = model[actionKey].apply(model, args);
-      switch (true) {
-        case isPlainObject(result):
-          commit({
-            type: mutationType,
-            res: result
-          });
-          return result;
-        case isPromise(result):
-          result.then(res => commit({ type: mutationType, res: res }));
-          return result;
-      }
-    };
+    const mutationType = actionKey;
+    const path = `${namespace}/${mutationType}`;
+    const action = model[actionKey];
 
     module.mutations[mutationType] = function (state, payload) {
-      const result = payload.res;
-      Object.keys(result).forEach((key) => {
-        state[key] = result[key];
-      });
+      const result = payload.result;
+      if (!result || !isPlainObject(result)) return;
+      Object.keys(result).forEach((key) => (state[key] = result[key]));
+    };
+
+    model[actionKey] = function (...args) {
+      const result = action.apply(model, args);
+      switch (true) {
+        case isPlainObject(result):
+          $store.commit({ type: path, result });
+          return result;
+        case isPromise(result):
+          result.then(result => $store.commit({ type: path, result }));
+          return result;
+      }
+      return result;
     };
   });
 
