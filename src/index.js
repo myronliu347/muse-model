@@ -65,10 +65,6 @@ export default class Muse {
     return component;
   }
 
-  dispatch (type, ...args) {
-    this.$store.dispatch(type, args);
-  }
-
   watch (fn, callback, options) {
     this.$store.watch(fn, callback, options);
   }
