@@ -7,7 +7,6 @@ export default class Muse {
     this.$options = options || {};
     this.state = {};
     this.actions = {};
-    this.plugins = [];
     this._init();
   }
 

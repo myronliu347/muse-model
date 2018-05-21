@@ -16,7 +16,6 @@ export default {
     };
   },
   addDispatch () {
-    console.log(this.add());
     return {
       count: this.state.count + 1
     };
