@@ -60,6 +60,12 @@ export default {
       count: this.state.count - 1
     };
   },
+  doubleAdd () {
+    this.add();
+    return {
+      count: this.state.count + 1
+    }
+  },
 
   addTimeOut () { // 异步处理
     return new Promise((resolve, reject) => {
