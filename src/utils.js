@@ -60,14 +60,15 @@ export function generateModule (model, $store) {
   return module;
 }
 
-export function allIn (state, actions) {
+export function allIn (state, actions, getters) {
   let computed = {};
   let methods = {};
 
   Object.keys(state).forEach((key) => {
     computed = {
       ...computed,
-      ...state[key]
+      ...state[key],
+      ...getters[key]
     };
   });
 

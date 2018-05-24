@@ -53,12 +53,20 @@ export default class Muse {
     return !!this.state[namespace];
   }
 
-  connect (component, models, filter) {
+  connect (component, models, mergeFunc) {
+    const state = {};
+    const actions = {};
+    const getters = {};
     if (!Array.isArray(models)) models = [models];
+    models.forEach(model => {
+      if (!model.namespace) return;
+      state[model.namespace] = this.state[model.namespace];
+      actions[model.namespace] = this.actions[model.namespace];
+      getters[model.namespace] = this.getters[model.namespace];
+      this.registerModel(model);
+    });
 
-    models.forEach(model => this.registerModel(model));
-
-    const mergeProp = (filter || allIn)(this.state, this.actions, this.getters);
+    const mergeProp = (mergeFunc || allIn)(state, actions, getters);
     component.computed = {
       ...mergeProp.computed,
       ...component.computed
