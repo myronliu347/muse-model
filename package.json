@@ -3,6 +3,7 @@
   "version": "0.3.2",
   "description": "a vuex plugin",
   "main": "dist/muse-model.js",
+  "repository": "https://github.com/myronliu347/muse-model.git",
   "scripts": {
     "dev": "parcel demo/index.html",
     "build": "rm -rf dist && rollup --config rollup.config.js"
