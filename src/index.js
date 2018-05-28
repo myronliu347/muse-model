@@ -60,10 +60,10 @@ export default class Muse {
     if (!Array.isArray(models)) models = [models];
     models.forEach(model => {
       if (!model.namespace) return;
+      this.registerModel(model);
       state[model.namespace] = this.state[model.namespace];
       actions[model.namespace] = this.actions[model.namespace];
       getters[model.namespace] = this.getters[model.namespace];
-      this.registerModel(model);
     });
 
     const mergeProp = (mergeFunc || allIn)(state, actions, getters);
