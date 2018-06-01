@@ -1,5 +1,5 @@
 <template>
-<div><button @click="addDispatch()">+</button>{{count}}<button @click="sub()">-</button>  {{computedCount}}</div>
+<div><button @click="change('count', 8)">+</button>{{count}}<button @click="sub()">-</button>  {{computedCount}}</div>
 </template>
 <script>
 import muse from './models/muse';

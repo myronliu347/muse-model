@@ -21,6 +21,7 @@ export function assert (condition, msg) {
   if (!condition) throw new Error(`[muse-model] ${msg}`);
 }
 
+const POINT = '.';
 export function generateModule (model, $store) {
   const namespace = model.namespace;
   const module = {
@@ -28,7 +29,20 @@ export function generateModule (model, $store) {
     state: model.state || {},
     getters: model.getters || {},
     actions: {},
-    mutations: {}
+    mutations: {
+      CHANGE (state, payload) {
+        if (!payload.key) return;
+        const arr = payload.key.split(POINT);
+        let obj = state;
+        arr.forEach((key, index) => {
+          if (arr.length - index <= 1) {
+            obj[key] = payload.result;
+            return;
+          }
+          obj = obj[key];
+        });
+      }
+    }
   };
 
   Object.keys(model).forEach((actionKey) => {
@@ -57,6 +71,13 @@ export function generateModule (model, $store) {
     };
   });
 
+  model.change = function (key, val) {
+    $store.commit({
+      type: `${namespace}/CHANGE`,
+      key,
+      result: val
+    });
+  };
   return module;
 }
 
